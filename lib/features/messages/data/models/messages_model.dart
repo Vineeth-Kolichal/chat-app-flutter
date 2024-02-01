@@ -21,11 +21,6 @@ class MessagesModel extends MessagesEntity {
         messages: List<MsgItemModel>.from(
             json["messages"].map((x) => MsgItemModel.fromJson(x))),
       );
-
-  // Map<String, dynamic> toJson() => {
-  //       "chatId": chatId,
-  //       "messages": List<dynamic>.from(messages!.map((x) => x.toJson())),
-  //     };
 }
 
 class MsgItemModel extends MsgItemEntity {
