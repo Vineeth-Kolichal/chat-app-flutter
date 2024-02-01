@@ -1,8 +1,11 @@
+import 'package:chat_app/core/dependancy_injection/config/config_injection.dart';
 import 'package:chat_app/features/on_boarding/presentation/pages/login_screen.dart';
 import 'package:chat_app/features/on_boarding/presentation/pages/otp_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureInjection();
   runApp(const MyApp());
 }
 
