@@ -1,3 +1,4 @@
+import 'package:chat_app/common/widgets/common_elevated_button.dart';
 import 'package:chat_app/common/widgets/space.dart';
 import 'package:chat_app/util/theme.dart';
 import 'package:flutter/material.dart';
@@ -87,16 +88,9 @@ class OtpScreen extends StatelessWidget {
                 ),
               ),
               Space.y(20),
-              SizedBox(
-                width: size.width,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Verify OTP",
-                    style: theme.textTheme.labelLarge
-                        ?.copyWith(color: Colors.white),
-                  ),
-                ),
+              CommonElevatedButton(
+                onPressed: () {},
+                label: "Verify OTP",
               ),
             ],
           ),
