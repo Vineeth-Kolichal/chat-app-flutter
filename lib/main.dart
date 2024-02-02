@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => SetProfileBloc()),
+        BlocProvider(create: (context) => getIt<SetProfileBloc>()),
         BlocProvider(create: (context) => getIt<SendOtpBloc>()),
         BlocProvider(create: (context) => getIt<VerifyOtpBloc>()),
       ],

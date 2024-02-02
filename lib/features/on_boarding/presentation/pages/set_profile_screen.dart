@@ -5,6 +5,8 @@ import 'package:chat_app/features/on_boarding/presentation/blocs/set_profile/set
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+final _formKey = GlobalKey<FormState>();
+
 class SetProfileScreen extends StatelessWidget {
   const SetProfileScreen({super.key});
 
@@ -50,28 +52,54 @@ class SetProfileScreen extends StatelessWidget {
                 },
               ),
               Space.y(20),
-              TextFormField(
-                controller: context.read<SetProfileBloc>().nameController,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 15,
-                  ),
-                  labelText: "Your name",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(45),
+              Form(
+                key: _formKey,
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Name required";
+                    }
+                    return null;
+                  },
+                  controller: context.read<SetProfileBloc>().nameController,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 15,
+                    ),
+                    labelText: "Your name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(45),
+                    ),
                   ),
                 ),
               ),
               Space.y(20),
-              CommonElevatedButton(
-                onPressed: () {
-                  context.read<SetProfileBloc>().add(Submit());
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => ChatScreen(),
-                  // ));
+              BlocConsumer<SetProfileBloc, SetProfileState>(
+                listener: (context, state) {
+                  if (state.isSuccess) {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const ChatScreen(),
+                    ));
+                  }
+                  if (state.error != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(state.error!),
+                      backgroundColor: Colors.red,
+                    ));
+                  }
                 },
-                label: "Submit",
+                builder: (context, state) {
+                  return CommonElevatedButton(
+                    isLoading: state.isLoading,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<SetProfileBloc>().add(const Submit());
+                      }
+                    },
+                    label: "Submit",
+                  );
+                },
               ),
               Text(
                 'By clicking submit, you are agreeing to all the terms and conditions of the chat app, thereby acknowledging\nyour consent to abide by the specified rules,\npolicies, and guidelines governing the\nuse of the platform',

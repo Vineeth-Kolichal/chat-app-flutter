@@ -2,6 +2,7 @@ import 'package:chat_app/core/failure/failures.dart';
 import 'package:chat_app/features/on_boarding/data/data_sources/on_boarding_data_sources.dart';
 import 'package:chat_app/features/on_boarding/domain/repositories/on_boarding_repos.dart';
 import 'package:chat_app/features/on_boarding/domain/usecase/send_otp_usecase.dart';
+import 'package:chat_app/features/on_boarding/domain/usecase/set_profile_usecase.dart';
 import 'package:chat_app/features/on_boarding/domain/usecase/verify_otp_usecase.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -25,6 +26,16 @@ class OnBoardingReposImpl implements OnBoardingRepos {
   Future<Either<Failure, void>> verifyOtp(Otp otp) async {
     try {
       final resp = await onBoardingDataSource.verifyOtp(otp);
+      return Right(resp);
+    } catch (e) {
+      return Left(Failure.apiRequestFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> setProfile(ProfileParam param) async {
+    try {
+      final resp = await onBoardingDataSource.setProfile(param);
       return Right(resp);
     } catch (e) {
       return Left(Failure.apiRequestFailure(e.toString()));
