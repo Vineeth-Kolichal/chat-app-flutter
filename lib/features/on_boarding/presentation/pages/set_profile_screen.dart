@@ -1,7 +1,7 @@
 import 'package:chat_app/common/widgets/common_elevated_button.dart';
 import 'package:chat_app/common/widgets/space.dart';
 import 'package:chat_app/features/home/presentation/pages/chat_screen.dart';
-import 'package:chat_app/features/on_boarding/presentation/blocs/bloc/set_profile_bloc.dart';
+import 'package:chat_app/features/on_boarding/presentation/blocs/set_profile/set_profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -414,7 +414,7 @@ class _$InitialImpl implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitialImpl &&
-            const DeepCollectionEquality().equals(other.image, image) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error) &&
@@ -423,8 +423,8 @@ class _$InitialImpl implements _Initial {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(image), isLoading, error, isSuccess);
+  int get hashCode =>
+      Object.hash(runtimeType, image, isLoading, error, isSuccess);
 
   @JsonKey(ignore: true)
   @override

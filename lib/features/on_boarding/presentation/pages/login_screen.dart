@@ -1,7 +1,12 @@
+import 'package:chat_app/common/widgets/common_elevated_button.dart';
 import 'package:chat_app/common/widgets/space.dart';
+import 'package:chat_app/features/on_boarding/presentation/blocs/send_otp/send_otp_bloc.dart';
 import 'package:chat_app/features/on_boarding/presentation/pages/otp_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+
+final _formKey = GlobalKey<FormState>();
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -10,6 +15,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
+    final sendOtpBloc = context.read<SendOtpBloc>();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -39,33 +45,59 @@ class LoginScreen extends StatelessWidget {
                 style: theme.textTheme.bodyMedium,
               ),
               Space.y(10),
-              IntlPhoneField(
-                decoration: InputDecoration(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                  labelText: 'Phone Number',
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(),
-                      borderRadius: BorderRadius.circular(45)),
+              Form(
+                key: _formKey,
+                child: IntlPhoneField(
+                  validator: (p0) {
+                    if (p0 == null ||
+                        p0.completeNumber.isEmpty ||
+                        p0.completeNumber.length < 13) {
+                      return "Please enter complete phone number";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 12),
+                    labelText: 'Phone Number',
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(),
+                        borderRadius: BorderRadius.circular(45)),
+                  ),
+                  initialCountryCode: 'IN',
+                  onChanged: (phone) {
+                    sendOtpBloc.phone = phone.completeNumber;
+                  },
                 ),
-                initialCountryCode: 'IN',
-                onChanged: (phone) {
-                  print(phone.completeNumber);
-                },
               ),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => OtpScreen(),
-                    ));
+                child: BlocConsumer<SendOtpBloc, SendOtpState>(
+                  listener: (context, state) {
+                    if (state.error != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(state.error!),
+                        backgroundColor: Colors.red,
+                      ));
+                    }
+                    if (state.isOtpSend) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const OtpScreen(),
+                      ));
+                    }
                   },
-                  child: Text(
-                    "Send OTP",
-                    style: theme.textTheme.labelLarge
-                        ?.copyWith(color: Colors.white),
-                  ),
+                  builder: (context, state) {
+                    return CommonElevatedButton(
+                      isLoading: state.isLoading,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate() &&
+                            sendOtpBloc.phone != null) {
+                          sendOtpBloc.add(const SendOtp());
+                        }
+                      },
+                      label: "Send OTP",
+                    );
+                  },
                 ),
               ),
             ],

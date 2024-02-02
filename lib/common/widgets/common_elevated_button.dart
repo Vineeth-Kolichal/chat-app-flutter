@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class CommonElevatedButton extends StatelessWidget {
   const CommonElevatedButton({
@@ -6,10 +7,12 @@ class CommonElevatedButton extends StatelessWidget {
     required this.onPressed,
     required this.label,
     this.widthFactor = 1.0,
+    this.isLoading = false,
   });
   final VoidCallback onPressed;
   final String label;
   final double widthFactor;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +21,15 @@ class CommonElevatedButton extends StatelessWidget {
     return SizedBox(
       width: size.width * widthFactor,
       child: ElevatedButton(
-        onPressed: onPressed,
-        child: Text(
-          label,
-          style: theme.textTheme.labelLarge?.copyWith(color: Colors.white),
-        ),
+        onPressed: isLoading ? null : onPressed,
+        child: isLoading
+            ? LoadingAnimationWidget.staggeredDotsWave(
+                color: Colors.white, size: 30)
+            : Text(
+                label,
+                style:
+                    theme.textTheme.labelLarge?.copyWith(color: Colors.white),
+              ),
       ),
     );
   }
