@@ -51,6 +51,7 @@ class SetProfileScreen extends StatelessWidget {
               ),
               Space.y(20),
               TextFormField(
+                controller: context.read<SetProfileBloc>().nameController,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 15,
@@ -64,12 +65,14 @@ class SetProfileScreen extends StatelessWidget {
               ),
               Space.y(20),
               CommonElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ChatScreen(),
-                    ));
-                  },
-                  label: "Submit"),
+                onPressed: () {
+                  context.read<SetProfileBloc>().add(Submit());
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => ChatScreen(),
+                  // ));
+                },
+                label: "Submit",
+              ),
               Text(
                 'By clicking submit, you are agreeing to all the terms and conditions of the chat app, thereby acknowledging\nyour consent to abide by the specified rules,\npolicies, and guidelines governing the\nuse of the platform',
                 style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),

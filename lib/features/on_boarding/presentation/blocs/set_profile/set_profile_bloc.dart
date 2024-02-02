@@ -25,5 +25,10 @@ class SetProfileBloc extends Bloc<SetProfileEvent, SetProfileState> {
         );
       }
     });
+
+    on<Submit>((event, emit) async {
+      final file = state.image;
+      print(file);
+    });
   }
 }
