@@ -1,4 +1,4 @@
-import 'package:chat_app/features/chats/presentation/pages/chat_screen.dart';
+import 'package:chat_app/features/home/presentation/pages/chat_screen.dart';
 import 'package:chat_app/features/on_boarding/presentation/blocs/bloc/set_profile_bloc.dart';
 import 'package:chat_app/features/on_boarding/presentation/pages/login_screen.dart';
 import 'package:chat_app/features/on_boarding/presentation/pages/otp_screen.dart';
@@ -25,13 +25,15 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
+          // brightness: Brightness.dark,
+          primarySwatch: Colors.blue,
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue))),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
-        home: const ChatScreen(),
+        home: const LoginScreen(),
       ),
     );
   }

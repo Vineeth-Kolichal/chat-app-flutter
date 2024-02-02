@@ -34,7 +34,7 @@ class MessageItem extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Text(
-                "Hi.....",
+                "Hi..... this is a message for testing the ui and to check the constratints work properly or not",
                 style: theme.textTheme.bodyMedium
                     ?.copyWith(color: isSender ? null : Colors.white),
               ),

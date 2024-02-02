@@ -10,12 +10,16 @@ class MessageScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Row(
+          children: [CircleAvatar(), Space.x(10), Text("Name")],
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
           Expanded(
-            child: ListView(children: [
+            child: ListView(reverse: true, children: [
               MessageItem(
                 isSender: false,
               ),
@@ -32,7 +36,7 @@ class MessageScreen extends StatelessWidget {
                     hintText: "Message",
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 15,
-                      vertical: 15,
+                      vertical: 10,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(45),

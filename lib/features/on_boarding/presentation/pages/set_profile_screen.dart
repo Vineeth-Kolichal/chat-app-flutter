@@ -1,5 +1,6 @@
 import 'package:chat_app/common/widgets/common_elevated_button.dart';
 import 'package:chat_app/common/widgets/space.dart';
+import 'package:chat_app/features/home/presentation/pages/chat_screen.dart';
 import 'package:chat_app/features/on_boarding/presentation/blocs/bloc/set_profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,7 +63,13 @@ class SetProfileScreen extends StatelessWidget {
                 ),
               ),
               Space.y(20),
-              CommonElevatedButton(onPressed: () {}, label: "Submit"),
+              CommonElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ChatScreen(),
+                    ));
+                  },
+                  label: "Submit"),
               Text(
                 'By clicking submit, you are agreeing to all the terms and conditions of the chat app, thereby acknowledging\nyour consent to abide by the specified rules,\npolicies, and guidelines governing the\nuse of the platform',
                 style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),

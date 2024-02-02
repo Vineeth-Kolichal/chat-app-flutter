@@ -1,5 +1,6 @@
 import 'package:chat_app/common/widgets/common_elevated_button.dart';
 import 'package:chat_app/common/widgets/space.dart';
+import 'package:chat_app/features/on_boarding/presentation/pages/set_profile_screen.dart';
 import 'package:chat_app/util/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
@@ -89,7 +90,11 @@ class OtpScreen extends StatelessWidget {
               ),
               Space.y(20),
               CommonElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SetProfileScreen(),
+                  ));
+                },
                 label: "Verify OTP",
               ),
             ],
