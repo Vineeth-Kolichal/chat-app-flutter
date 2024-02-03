@@ -1,3 +1,4 @@
+import 'package:chat_app/features/home/presentation/blocs/chats/chats_cubit.dart';
 import 'package:chat_app/features/home/presentation/pages/chat_screen.dart';
 import 'package:chat_app/features/on_boarding/presentation/blocs/cubit/splash_cubit.dart';
 import 'package:chat_app/features/on_boarding/presentation/pages/login_screen.dart';
@@ -17,11 +18,13 @@ class SplashScreen extends StatelessWidget {
       body: BlocListener<SplashCubit, SplashState>(
         listener: (context, state) {
           if (state.nextRoute == "chat") {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => const ChatScreen(),
-              ),
-            );
+            context.read<ChatsCubit>().getChats().then((value) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const ChatScreen(),
+                ),
+              );
+            });
           } else if (state.nextRoute == "setProfile") {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(

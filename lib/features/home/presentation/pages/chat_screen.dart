@@ -1,4 +1,5 @@
 import 'package:chat_app/common/widgets/space.dart';
+import 'package:chat_app/core/api_endpoints/api_endpoints.dart';
 import 'package:chat_app/features/home/presentation/blocs/chats/chats_cubit.dart';
 import 'package:chat_app/features/home/presentation/pages/contacts_screen.dart';
 import 'package:chat_app/features/messages/presentation/pages/message_screen.dart';
@@ -11,32 +12,39 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<ChatsCubit>().getChats();
+     
     });
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(),
-      body: ListView.separated(
-        itemBuilder: (context, index) {
-          return ListTile(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MessageScreen(),
-              ));
+      body: BlocBuilder<ChatsCubit, ChatsState>(
+        builder: (context, state) {
+          return ListView.separated(
+            itemBuilder: (context, index) {
+              return ListTile(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MessageScreen(),
+                  ));
+                },
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "${ApiEndpoints.baseUrl}${state.chats[index].imagePath}"),
+                ),
+                title: Text(
+                  "Name",
+                  style: theme.textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text("${state.chats[index].lastMsg}"),
+                trailing: Text("05:30 pm"),
+              );
             },
-            leading: CircleAvatar(),
-            title: Text(
-              "Name",
-              style: theme.textTheme.bodyLarge
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text("last msg"),
-            trailing: Text("05:30 pm"),
+            separatorBuilder: (context, index) => Space.y(5),
+            itemCount: state.chats.length,
           );
         },
-        separatorBuilder: (context, index) => Space.y(5),
-        itemCount: 20,
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {

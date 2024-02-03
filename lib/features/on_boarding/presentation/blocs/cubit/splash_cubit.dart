@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,11 +18,16 @@ class SplashCubit extends Cubit<SplashState> {
     initSocket();
     SharedPreferences shared = await SharedPreferences.getInstance();
     final token = shared.getString('token');
+    final phone = shared.getString('phone');
     final profile = shared.getBool('profile');
     Future.delayed(const Duration(seconds: 3), () {
       if (token != null) {
         if (profile != null) {
           emit(state.copyWith(nextRoute: "chat"));
+          print(DateTime.now().millisecondsSinceEpoch);
+          Timer(const Duration(seconds: 1), () {
+            socket.emit('chats', {"phone": "+919447879111"});
+          });
         } else {
           emit(state.copyWith(nextRoute: "setProfile"));
         }
