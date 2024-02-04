@@ -11,9 +11,7 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-     
-    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -25,7 +23,8 @@ class ChatScreen extends StatelessWidget {
               return ListTile(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MessageScreen(),
+                    builder: (context) =>
+                        MessageScreen(chat: state.chats[index]),
                   ));
                 },
                 leading: CircleAvatar(
@@ -33,7 +32,7 @@ class ChatScreen extends StatelessWidget {
                       "${ApiEndpoints.baseUrl}${state.chats[index].imagePath}"),
                 ),
                 title: Text(
-                  "Name",
+                  "${state.chats[index].name}",
                   style: theme.textTheme.bodyLarge
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),

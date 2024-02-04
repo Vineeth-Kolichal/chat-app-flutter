@@ -1,9 +1,12 @@
 import 'package:chat_app/common/widgets/space.dart';
+import 'package:chat_app/core/api_endpoints/api_endpoints.dart';
+import 'package:chat_app/features/home/data/models/chat_model.dart';
 import 'package:chat_app/features/messages/presentation/widgets/messge_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class MessageScreen extends StatelessWidget {
-  const MessageScreen({super.key});
+  const MessageScreen({super.key, required this.chat});
+  final Chat chat;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,14 @@ class MessageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          children: [CircleAvatar(), Space.x(10), Text("Name")],
+          children: [
+            CircleAvatar(
+              backgroundImage:
+                  NetworkImage("${ApiEndpoints.baseUrl}${chat.imagePath}"),
+            ),
+            Space.x(10),
+            Text("${chat.name}")
+          ],
         ),
       ),
       body: Padding(
@@ -21,9 +31,11 @@ class MessageScreen extends StatelessWidget {
           Expanded(
             child: ListView(reverse: true, children: [
               MessageItem(
+                imagePath: "${ApiEndpoints.baseUrl}${chat.imagePath}",
                 isSender: false,
               ),
               MessageItem(
+                imagePath: "${ApiEndpoints.baseUrl}${chat.imagePath}",
                 isSender: true,
               )
             ]),

@@ -5,8 +5,10 @@ class MessageItem extends StatelessWidget {
   const MessageItem({
     super.key,
     required this.isSender,
+    required this.imagePath
   });
   final bool isSender;
+  final String imagePath;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -21,7 +23,7 @@ class MessageItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             if (!isSender)
-              CircleAvatar(
+              CircleAvatar(backgroundImage: NetworkImage(imagePath),
                 radius: 15,
               ),
             Space.x(5),

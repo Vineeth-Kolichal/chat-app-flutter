@@ -5,6 +5,7 @@ import 'package:chat_app/features/home/data/models/chat_list_model.dart';
 import 'package:chat_app/features/home/data/models/chat_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import "package:socket_io_client/socket_io_client.dart";
 
 abstract class HomeDataSources {
@@ -15,17 +16,21 @@ abstract class HomeDataSources {
 @LazySingleton(as: HomeDataSources)
 @injectable
 class HomeDataSourceImpl implements HomeDataSources {
+  static late String phone;
   final Socket socket;
 
   HomeDataSourceImpl(this.socket);
   @override
   Future<Stream<List<Chat>>> getChatStream() async {
+    SharedPreferences shared = await SharedPreferences.getInstance();
+    phone = shared.getString('phone')!;
     try {
       final controller = StreamController<List<Chat>>();
       socket.on("chats", (data) {
         final dta = ChatModel.fromJson(data);
-        print(dta.phone);
-        controller.sink.add(dta.chatList);
+        if (phone == dta.phone) {
+          controller.sink.add(dta.chatList);
+        }
       });
       return controller.stream;
     } catch (e) {

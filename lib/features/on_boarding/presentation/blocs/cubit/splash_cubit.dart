@@ -26,7 +26,7 @@ class SplashCubit extends Cubit<SplashState> {
           emit(state.copyWith(nextRoute: "chat"));
           print(DateTime.now().millisecondsSinceEpoch);
           Timer(const Duration(seconds: 1), () {
-            socket.emit('chats', {"phone": "+919447879111"});
+            socket.emit('chats', {"phone": phone});
           });
         } else {
           emit(state.copyWith(nextRoute: "setProfile"));
