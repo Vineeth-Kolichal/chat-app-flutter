@@ -1,6 +1,8 @@
+import 'package:chat_app/features/messages/data/models/messages_model.dart';
+
 class MessagesEntity {
   final String? chatId;
-  final List<MsgItemEntity>? messages;
+  final List<MsgItemModel> messages;
 
   MessagesEntity({
     required this.chatId,
@@ -15,13 +17,14 @@ class MsgItemEntity {
   final String? receiver;
   final DateTime? dateTime;
   final String? message;
+  String? phoneNum;
 
-  MsgItemEntity({
-    required this.id,
-    required this.chatId,
-    required this.sender,
-    required this.receiver,
-    required this.dateTime,
-    required this.message,
-  });
+  MsgItemEntity(
+      {required this.id,
+      required this.chatId,
+      required this.sender,
+      required this.receiver,
+      required this.dateTime,
+      required this.message,
+      required this.phoneNum});
 }

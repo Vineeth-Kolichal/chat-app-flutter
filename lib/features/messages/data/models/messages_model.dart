@@ -24,23 +24,23 @@ class MessagesModel extends MessagesEntity {
 }
 
 class MsgItemModel extends MsgItemEntity {
-  MsgItemModel({
-    required super.id,
-    required super.chatId,
-    required super.sender,
-    required super.receiver,
-    required super.dateTime,
-    required super.message,
-  });
+  MsgItemModel(
+      {required super.id,
+      required super.chatId,
+      required super.sender,
+      required super.receiver,
+      required super.dateTime,
+      required super.message,
+      required super.phoneNum});
 
   factory MsgItemModel.fromJson(Map<String, dynamic> json) => MsgItemModel(
-        id: json["_id"],
-        chatId: json["chatId"],
-        sender: json["sender"],
-        receiver: json["receiver"],
-        dateTime: DateTime.parse(json["dateTime"]),
-        message: json["message"],
-      );
+      id: json["_id"],
+      chatId: json["chatId"],
+      sender: json["sender"],
+      receiver: json["receiver"],
+      dateTime: DateTime.parse(json["dateTime"]),
+      message: json["message"],
+      phoneNum: null);
 
   Map<String, dynamic> toJson() => {
         "_id": id,

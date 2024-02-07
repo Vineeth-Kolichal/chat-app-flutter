@@ -2,6 +2,7 @@ import 'package:chat_app/common/widgets/space.dart';
 import 'package:chat_app/core/api_endpoints/api_endpoints.dart';
 import 'package:chat_app/features/home/presentation/blocs/chats/chats_cubit.dart';
 import 'package:chat_app/features/home/presentation/pages/contacts_screen.dart';
+import 'package:chat_app/features/messages/presentation/blocs/cubit/message_cubit.dart';
 import 'package:chat_app/features/messages/presentation/pages/message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,9 @@ class ChatScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               return ListTile(
                 onTap: () {
+                  context
+                      .read<MessageCubit>()
+                      .getIntialMessages("${state.chats[index].id}");
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
                         MessageScreen(chat: state.chats[index]),

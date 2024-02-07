@@ -1,13 +1,10 @@
 import 'package:chat_app/features/home/presentation/blocs/chats/chats_cubit.dart';
-import 'package:chat_app/features/home/presentation/pages/chat_screen.dart';
 import 'package:chat_app/core/dependancy_injection/config/config_injection.dart';
+import 'package:chat_app/features/messages/presentation/blocs/cubit/message_cubit.dart';
 import 'package:chat_app/features/on_boarding/presentation/blocs/cubit/splash_cubit.dart';
 import 'package:chat_app/features/on_boarding/presentation/blocs/send_otp/send_otp_bloc.dart';
 import 'package:chat_app/features/on_boarding/presentation/blocs/set_profile/set_profile_bloc.dart';
 import 'package:chat_app/features/on_boarding/presentation/blocs/verify_otp/verify_otp_bloc.dart';
-import 'package:chat_app/features/on_boarding/presentation/pages/login_screen.dart';
-import 'package:chat_app/features/on_boarding/presentation/pages/otp_screen.dart';
-import 'package:chat_app/features/on_boarding/presentation/pages/set_profile_screen.dart';
 import 'package:chat_app/features/on_boarding/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +28,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<VerifyOtpBloc>()),
         BlocProvider(create: (context) => getIt<SplashCubit>()),
         BlocProvider(create: (context) => getIt<ChatsCubit>()),
+        BlocProvider(create: (context) => getIt<MessageCubit>()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
