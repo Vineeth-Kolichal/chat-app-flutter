@@ -36,7 +36,7 @@ import 'package:chat_app/features/messages/domain/usecases/message_stream_usecas
     as _i19;
 import 'package:chat_app/features/messages/domain/usecases/send_message_usecase.dart'
     as _i20;
-import 'package:chat_app/features/messages/presentation/blocs/cubit/message_cubit.dart'
+import 'package:chat_app/features/messages/presentation/blocs/message_cubit/message_cubit.dart'
     as _i27;
 import 'package:chat_app/features/on_boarding/data/data_sources/on_boarding_data_sources.dart'
     as _i4;
