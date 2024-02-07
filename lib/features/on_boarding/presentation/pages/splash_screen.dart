@@ -18,13 +18,13 @@ class SplashScreen extends StatelessWidget {
       body: BlocListener<SplashCubit, SplashState>(
         listener: (context, state) {
           if (state.nextRoute == "chat") {
-            context.read<ChatsCubit>().getChats().then((value) {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const ChatScreen(),
-                ),
-              );
-            });
+            // context.read<ChatsCubit>().getChats().then((value) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const ChatScreen(),
+              ),
+            );
+            // });
           } else if (state.nextRoute == "setProfile") {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(

@@ -5,4 +5,6 @@ class ApiEndpoints {
   static String setProfile = "/set-profile";
   static String getUsers = "/all-users";
   static String getProfile = "/get-profile";
+  static String getChats = "/getAllChats";
+  static String getMessages = "/getMessages";
 }

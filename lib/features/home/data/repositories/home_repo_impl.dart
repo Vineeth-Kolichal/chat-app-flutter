@@ -21,4 +21,14 @@ class HomeRepoImpl implements HomeRepo {
       return Left(Failure.apiRequestFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Chat>>> getIntialChats() async {
+    try {
+      final data = await homeDataSources.getChatList();
+      return Right(data);
+    } catch (e) {
+      return Left(Failure.apiRequestFailure(e.toString()));
+    }
+  }
 }

@@ -5,4 +5,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class HomeRepo {
   Future<Either<Failure, Stream<List<Chat>>>> getChatStream();
+  Future<Either<Failure, List<Chat>>> getIntialChats();
 }
