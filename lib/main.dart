@@ -1,3 +1,4 @@
+import 'package:chat_app/features/home/presentation/blocs/bloc/users_bloc.dart';
 import 'package:chat_app/features/home/presentation/blocs/chats/chats_cubit.dart';
 import 'package:chat_app/core/dependancy_injection/config/config_injection.dart';
 import 'package:chat_app/features/messages/presentation/blocs/message_cubit/message_cubit.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<SplashCubit>()),
         BlocProvider(create: (context) => getIt<ChatsCubit>()),
         BlocProvider(create: (context) => getIt<MessageCubit>()),
+        BlocProvider(create: (context) => getIt<UsersBloc>()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

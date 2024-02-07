@@ -1,5 +1,6 @@
 import 'package:chat_app/common/widgets/space.dart';
 import 'package:chat_app/core/api_endpoints/api_endpoints.dart';
+import 'package:chat_app/features/home/presentation/blocs/bloc/users_bloc.dart';
 import 'package:chat_app/features/home/presentation/blocs/chats/chats_cubit.dart';
 import 'package:chat_app/features/home/presentation/pages/contacts_screen.dart';
 import 'package:chat_app/features/messages/presentation/blocs/message_cubit/message_cubit.dart';
@@ -51,6 +52,7 @@ class ChatScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
+            context.read<UsersBloc>().add(GetUsers());
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ContactsScreen(),
             ));
