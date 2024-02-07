@@ -1,7 +1,7 @@
 import 'package:chat_app/common/widgets/space.dart';
 import 'package:chat_app/core/api_endpoints/api_endpoints.dart';
 import 'package:chat_app/features/home/data/models/chat_model.dart';
-import 'package:chat_app/features/messages/presentation/blocs/cubit/message_cubit.dart';
+import 'package:chat_app/features/messages/presentation/blocs/message_cubit/message_cubit.dart';
 import 'package:chat_app/features/messages/presentation/widgets/messge_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,5 +1,6 @@
 class ApiEndpoints {
   static String baseUrl = "http://10.0.2.2:3000";
+  //static String baseUrl = "http://192.168.4.112:3000";
   static String sendOtp = "/send-otp";
   static String verifyOtp = "/verify-otp";
   static String setProfile = "/set-profile";
