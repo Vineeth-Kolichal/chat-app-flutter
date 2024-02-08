@@ -11,7 +11,6 @@ class SendMessageUsecase implements UseCase<void, MessageParam> {
   SendMessageUsecase(this.repo);
   @override
   Future<Either<Failure, void>> call(MessageParam params) {
-    print(params.toJson());
     return repo.sendMessage(params);
   }
 }

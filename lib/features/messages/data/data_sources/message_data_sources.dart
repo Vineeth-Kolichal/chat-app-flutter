@@ -75,7 +75,6 @@ class MessageDataSourcesImpl implements MessageDataSources {
   Future<void> sendMessage(MessageParam param) async {
     try {
       param.user1 = shared.getString('phone');
-      print(param.toJson());
       socket.emit("messages", param.toJson());
     } catch (e) {
       throw CustomException.otherException(e.toString());

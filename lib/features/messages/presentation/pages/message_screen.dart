@@ -24,9 +24,9 @@ class MessageScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (chatId != null) {
-        context.read<MessageCubit>().getMessages(chatId!);
-      }
+      // if (chatId != null) {
+      //   context.read<MessageCubit>().getMessages(chatId!);
+      // }
     });
     return Scaffold(
       appBar: AppBar(
