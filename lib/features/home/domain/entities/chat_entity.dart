@@ -4,16 +4,15 @@ class ChatEntity {
   final String? name;
   final String? phoneNumber;
   final String? imagePath;
-  final String? cName;
+  String? cName;
   final String? lastMsg;
 
-  ChatEntity({
-    required this.id,
-    required this.lastMsgDate,
-    required this.name,
-    required this.phoneNumber,
-    required this.imagePath,
-    required this.cName,
-    required this.lastMsg
-  });
+  ChatEntity(
+      {required this.id,
+      required this.lastMsgDate,
+      required this.name,
+      required this.phoneNumber,
+      required this.imagePath,
+      required this.cName,
+      required this.lastMsg});
 }

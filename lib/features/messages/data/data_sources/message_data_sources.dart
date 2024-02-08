@@ -31,7 +31,7 @@ class MessageDataSourcesImpl implements MessageDataSources {
     phone = shared.getString('phone');
     try {
       final resp = await dio.get(ApiEndpoints.getMessages,
-          data: {"chatId": "65bb7d122546cf42da289f42"},
+          data: {"chatId": param.chatId},
           options: Options(headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer $token",
@@ -75,6 +75,7 @@ class MessageDataSourcesImpl implements MessageDataSources {
   Future<void> sendMessage(MessageParam param) async {
     try {
       param.user1 = shared.getString('phone');
+      print(param.toJson());
       socket.emit("messages", param.toJson());
     } catch (e) {
       throw CustomException.otherException(e.toString());

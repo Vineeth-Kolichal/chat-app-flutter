@@ -18,7 +18,7 @@ class GetIntitialMessageUsecase
 }
 
 class ChatIdParam {
-  final String chatId;
+  final String? chatId;
 
   ChatIdParam({required this.chatId});
 }

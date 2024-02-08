@@ -7,15 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MessageScreen extends StatelessWidget {
-  const MessageScreen({super.key, required this.chat});
-  final Chat chat;
+  const MessageScreen(
+      {super.key,
+      this.chatId,
+      this.name,
+      required this.phone,
+      required this.imagePath});
+
+  final String? chatId;
+  final String? name;
+  final String phone;
+  final String imagePath;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<MessageCubit>().getMessages(chat.id!);
+      if (chatId != null) {
+        context.read<MessageCubit>().getMessages(chatId!);
+      }
     });
     return Scaffold(
       appBar: AppBar(
@@ -23,10 +34,10 @@ class MessageScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundImage:
-                  NetworkImage("${ApiEndpoints.baseUrl}${chat.imagePath}"),
+                  NetworkImage("${ApiEndpoints.baseUrl}$imagePath"),
             ),
             Space.x(10),
-            Text("${chat.name}")
+            Text("${(name == null) ? phone : name}")
           ],
         ),
       ),
@@ -36,18 +47,16 @@ class MessageScreen extends StatelessWidget {
           Expanded(
             child: BlocBuilder<MessageCubit, MessageState>(
               builder: (context, state) {
-                for (var x in state.messages) {
-                  print(x.phoneNum);
-                }
                 return ListView.builder(
-                    reverse: true,
-                    itemBuilder: (context, index) => MessageItem(
-                          msgItemModel: state.messages[index],
-                          imagePath: "${ApiEndpoints.baseUrl}${chat.imagePath}",
-                          isSender: (state.messages[index].sender ==
-                              state.messages[index].phoneNum),
-                        ),
-                    itemCount: state.messages.length);
+                  reverse: true,
+                  itemBuilder: (context, index) => MessageItem(
+                    msgItemModel: state.messages[index],
+                    imagePath: "${ApiEndpoints.baseUrl}$imagePath",
+                    isSender: (state.messages[index].sender ==
+                        state.messages[index].phoneNum),
+                  ),
+                  itemCount: state.messages.length,
+                );
               },
             ),
           ),
@@ -70,11 +79,12 @@ class MessageScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  context
-                      .read<MessageCubit>()
-                      .sendMessage(chatId: chat.id!, user2: chat.phoneNumber!);
+                  context.read<MessageCubit>().sendMessage(
+                        chatId: chatId,
+                        user2: phone,
+                      );
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.send,
                   size: 35,
                   color: Colors.blue,

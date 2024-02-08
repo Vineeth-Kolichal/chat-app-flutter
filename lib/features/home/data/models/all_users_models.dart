@@ -12,17 +12,18 @@ class AllUsersModel extends AllUsersEntity {
 }
 
 class UserModel extends UserEntity {
-  UserModel({
-    required super.name,
-    required super.phoneNumber,
-    required super.imagePath,
-    super.contactName,
-  });
+  UserModel(
+      {required super.name,
+      required super.phoneNumber,
+      required super.imagePath,
+      super.contactName,
+      super.chatId});
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         name: json["name"],
         phoneNumber: json["phoneNumber"],
         imagePath: json["imagePath"],
+        chatId: json["chatId"],
       );
 
   Map<String, dynamic> toJson() => {

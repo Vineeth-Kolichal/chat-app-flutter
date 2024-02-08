@@ -37,6 +37,16 @@ class HomeDataSourceImpl implements HomeDataSources {
       socket.on("chats", (data) {
         final dta = ChatModel.fromJson(data);
         if (phone == dta.phone) {
+          for (var i = 0; i < contactList.length; i++) {
+            if (contactList[i].phones.isNotEmpty) {
+              for (var j = 0; j < dta.chatList.length; j++) {
+                if (contactList[i].phones[0].normalizedNumber ==
+                    dta.chatList[j].phoneNumber) {
+                  dta.chatList[j].cName = contactList[i].displayName;
+                }
+              }
+            }
+          }
           controller.sink.add(dta.chatList);
         }
       });
@@ -62,6 +72,16 @@ class HomeDataSourceImpl implements HomeDataSources {
             "Authorization": "Bearer $token",
           }));
       final chat = ChatModel.fromJson(resp.data);
+      for (var i = 0; i < contactList.length; i++) {
+        if (contactList[i].phones.isNotEmpty) {
+          for (var j = 0; j < chat.chatList.length; j++) {
+            if (contactList[i].phones[0].normalizedNumber ==
+                chat.chatList[j].phoneNumber) {
+              chat.chatList[j].cName = contactList[i].displayName;
+            }
+          }
+        }
+      }
 
       return chat.chatList;
     } on DioException catch (e) {
@@ -79,6 +99,7 @@ class HomeDataSourceImpl implements HomeDataSources {
       phone = shared.getString('phone')!;
       final token = shared.getString('token');
       final resp = await dio.get(ApiEndpoints.getUsers,
+          data: {"phone": phone},
           options: Options(headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer $token",
@@ -87,8 +108,9 @@ class HomeDataSourceImpl implements HomeDataSources {
       for (var i = 0; i < contactList.length; i++) {
         if (contactList[i].phones.isNotEmpty) {
           for (var j = 0; j < allUsersModel.users.length; j++) {
-            if (contactList[i].phones[0].normalizedNumber ==
-                allUsersModel.users[j].phoneNumber) {
+            if ((contactList[i].phones[0].normalizedNumber ==
+                    allUsersModel.users[j].phoneNumber) &&
+                (allUsersModel.users[j].phoneNumber != phone)) {
               allUsersModel.users[j].contactName = contactList[i].displayName;
               retVal.add(allUsersModel.users[j]);
             }

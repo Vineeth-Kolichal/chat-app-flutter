@@ -7,6 +7,7 @@ import 'package:chat_app/features/messages/presentation/blocs/message_cubit/mess
 import 'package:chat_app/features/messages/presentation/pages/message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -27,9 +28,16 @@ class ChatScreen extends StatelessWidget {
                   context
                       .read<MessageCubit>()
                       .getIntialMessages("${state.chats[index].id}");
+                  context
+                      .read<MessageCubit>()
+                      .getMessages(state.chats[index].id);
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        MessageScreen(chat: state.chats[index]),
+                    builder: (context) => MessageScreen(
+                      chatId: state.chats[index].id,
+                      phone: state.chats[index].phoneNumber!,
+                      imagePath: state.chats[index].imagePath!,
+                      name: state.chats[index].cName,
+                    ),
                   ));
                 },
                 leading: CircleAvatar(
@@ -37,12 +45,18 @@ class ChatScreen extends StatelessWidget {
                       "${ApiEndpoints.baseUrl}${state.chats[index].imagePath}"),
                 ),
                 title: Text(
-                  "${state.chats[index].name}",
+                  "${(state.chats[index].cName == null) ? state.chats[index].phoneNumber : state.chats[index].cName}",
                   style: theme.textTheme.bodyLarge
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text("${state.chats[index].lastMsg}"),
-                trailing: Text("05:30 pm"),
+                subtitle: Text(
+                  "${state.chats[index].lastMsg}",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                trailing: Text(DateFormat('hh:mm a')
+                    .format(state.chats[index].lastMsgDate!)
+                    .toLowerCase()),
               );
             },
             separatorBuilder: (context, index) => Space.y(5),

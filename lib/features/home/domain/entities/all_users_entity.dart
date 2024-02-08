@@ -11,11 +11,13 @@ class UserEntity {
   final String? phoneNumber;
   final String? imagePath;
   String? contactName;
+  String? chatId;
 
   UserEntity({
     required this.name,
     required this.phoneNumber,
     required this.imagePath,
-    this.contactName
+    this.contactName,
+    this.chatId,
   });
 }

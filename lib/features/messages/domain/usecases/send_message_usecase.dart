@@ -11,12 +11,13 @@ class SendMessageUsecase implements UseCase<void, MessageParam> {
   SendMessageUsecase(this.repo);
   @override
   Future<Either<Failure, void>> call(MessageParam params) {
+    print(params.toJson());
     return repo.sendMessage(params);
   }
 }
 
 class MessageParam {
-  final String chatId;
+  String? chatId;
   String? user1;
   final String user2;
   final String message;

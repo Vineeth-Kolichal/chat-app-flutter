@@ -25,6 +25,7 @@ class MessageCubit extends Cubit<MessageState> {
   Future<void> getIntialMessages(String chatId) async {
     final resp = await getIntitialMessageUsecase(ChatIdParam(chatId: chatId));
     final newState = resp.fold((fail) {
+      print(fail.error);
       return state.copyWith(error: fail.error);
     }, (msgList) {
       return state.copyWith(messages: msgList.reversed.toList(), error: null);
@@ -32,7 +33,7 @@ class MessageCubit extends Cubit<MessageState> {
     emit(newState);
   }
 
-  Future<void> getMessages(String chatId) async {
+  Future<void> getMessages(String? chatId) async {
     final resp = await messageStreamUsecase(ChatIdParam(chatId: chatId));
     resp.fold((fail) {
       emit(state.copyWith(error: fail.error));
@@ -44,8 +45,10 @@ class MessageCubit extends Cubit<MessageState> {
   }
 
   Future<void> sendMessage(
-      {required String chatId, required String user2}) async {
+      {required String? chatId, required String user2}) async {
     if (msgController.text.isNotEmpty) {
+      print(chatId);
+      print(user2);
       final resp = await sendMessageUsecase(MessageParam(
           chatId: chatId, user2: user2, message: msgController.text.trim()));
       msgController.clear();

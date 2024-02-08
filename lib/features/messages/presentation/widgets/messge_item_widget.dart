@@ -28,7 +28,7 @@ class MessageItem extends StatelessWidget {
             if (!isSender)
               CircleAvatar(
                 backgroundImage: NetworkImage(imagePath),
-                radius: 15,
+                radius: 10,
               ),
             Space.x(5),
             Container(
